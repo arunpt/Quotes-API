@@ -16,7 +16,10 @@ class GoodReads:
             squote['text']= quote.find("div", {"class": "quoteText"}).text.replace('\n','').strip()
             squote['author'] = quote.find("span", {"class": "authorOrTitle"}).text.replace('\n','').strip()  
             leftAlignedImage = quote.find("a", {"class": "leftAlignedImage"})
-            squote['image'] = leftAlignedImage.img['src'] if leftAlignedImage else None
+            image = leftAlignedImage.img['src'] if leftAlignedImage else None
+            squote['image'] = image
+            if image:
+                squire["image"] = image.replace("p2", "p8") 
             quoteFooter = quote.find("div", {"class": "quoteFooter"})
             squote['tags'] = [tag.text.strip() for tag in quoteFooter.find_all("a") if tag and "likes" not in tag.text]
             results.append(squote)
